@@ -1,7 +1,9 @@
 from flask import Flask, request, Response, json, jsonify
+from flask_cors import CORS
 import session_manager
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')
