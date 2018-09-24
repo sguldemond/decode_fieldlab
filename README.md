@@ -4,6 +4,8 @@ Proof of concept for decode made during Fieldlab hackathon
 # Installation
 
 python3 -m venv venv
-source venb/bin/activate
+source venv/bin/activate
+pip install -r server/requirements.txt
 
-pip install -r requirements.txt
+cd server
+python api.py
