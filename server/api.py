@@ -1,4 +1,8 @@
 from flask import Flask, request, Response, json, jsonify, session, Session
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
 
 app = Flask(__name__)
 # sess = Session()
