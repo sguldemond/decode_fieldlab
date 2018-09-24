@@ -1,7 +1,7 @@
 from flask import Flask, request, Response, json, jsonify, session, Session
 
 app = Flask(__name__)
-sess = Session()
+# sess = Session()
 
 @app.route('/')
 def hello():
@@ -11,12 +11,14 @@ def hello():
 def init_disclosure_request():
     data = request.get_data()
 
-    session['key'] = 'value'
+    # session['key'] = 'value'
     return jsonify({"message": "OK"})
 
 @app.route('/get')
 def get_session():
-    return session.get('key', 'not set')
+    # return session.get('key', 'not set')
+    pass
+
 
 def json_response(data):
     response = Response(
@@ -28,5 +30,5 @@ def json_response(data):
     return response
 
 if __name__ == '__main__':
-    sess.init_app(app)
+    # sess.init_app(app)
     app.run()
