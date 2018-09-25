@@ -61,12 +61,12 @@ def accept_request():
     attribute_request = session_manager.get_session(session_id)['request']
     validator_response = validator.check(attribute_request, brp_data)
 
-    active_session = session_manager.append_session_data(session_id, {'request_valid': validator_response})
+    active_session = session_manager.append_session_data(session_id, {'request_valid': validator_response, 'request_status': 'ACCEPTED'})
 
     # can not be ended here, since requestor needs to access data still
     # session_manager.end_session(session_id)
 
-    return json_response(active_session)
+    return json_response({'response': active_session})
 
 
 @app.route('/deny_request', methods=['POST'])
@@ -75,9 +75,11 @@ def deny_request():
     data_json = json.loads(data)
     session_id = data_json['session_id']
 
-    response = session_manager.end_session(session_id)
+    active_session = session_manager.append_session_data(session_id, {'request_status': 'DENIED'})
 
-    return json_response({'response': response})
+    session_manager.end_session(session_id)
+
+    return json_response({'response': active_session})
 
 
 @app.route('/get_active_sessions', methods=['GET'])

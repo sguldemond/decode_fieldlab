@@ -14,6 +14,9 @@ def age_check(age, date_of_birth):
 
 
 def check(request, user_data):
+    if user_data is None:
+        return "No user data found"
+
     if request == 'ouderdan18':
         print(user_data)
         if user_data['dateOfBirth'] == "02-08-1999":
