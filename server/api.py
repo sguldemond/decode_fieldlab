@@ -6,15 +6,10 @@ import session_manager
 import data_source
 import validator
 
-app = Flask(__name__, static_url_path='/../../dist')
+app = Flask(__name__)
 CORS(app)
 
 data_source.generate_dummy_data()
-
-# @app.route('/decode/<path:path>')
-# def send_web(path):
-#     return send_from_directory('', path)
-
 
 @app.route('/')
 def hello():
@@ -74,17 +69,6 @@ def accept_request():
     return json_response({'response': active_session})
 
 
-@app.route('/get_picture_url', methods=['POST'])
-def get_picture_url():
-    data = request.get_data()
-    data_json = json.loads(data)
-    username = data_json['username']
-
-    user_picture_url = data_source.get_picture_url(username)
-
-    return json_response({'response': user_picture_url})
-
-
 @app.route('/deny_request', methods=['POST'])
 def deny_request():
     data = request.get_data()
@@ -102,6 +86,18 @@ def deny_request():
 @app.route('/get_active_sessions', methods=['GET'])
 def get_active_sessions():
     return json_response(session_manager.active_sessions)
+
+
+@app.route('/get_picture_url', methods=['POST'])
+def get_picture_url():
+    data = request.get_data()
+    data_json = json.loads(data)
+    username = data_json['username']
+
+    user_picture_url = data_source.get_picture_url(username)
+
+    return json_response({'response': user_picture_url})
+
 
 
 @app.route('/login', methods=['POST'])

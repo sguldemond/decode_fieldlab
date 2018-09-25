@@ -8,7 +8,7 @@ def init_session(attribute_request, description):
     new_session = {'request': attribute_request,
                    'description': description,
                    'id': new_session_id,
-                   'data': 'null',
+                   'data': None,
                    'status': 'INITIALIZED'}
     active_sessions.append(new_session)
     return new_session_id
