@@ -2,6 +2,7 @@ from flask import Flask, request, Response, json, session, send_from_directory
 from flask_cors import CORS
 import session_manager
 import data_source
+import validator
 
 app = Flask(__name__, static_url_path='/../../dist')
 CORS(app)
@@ -55,9 +56,12 @@ def accept_request():
     data_json = json.loads(data)
     session_id = data_json['session_id']
     username = data_json['username']
-
     brp_data = data_source.get_data(username)
-    active_session = session_manager.append_session_data(session_id, brp_data)
+
+    attribute_request = session_manager.get_session(session_id)['request']
+    validator_response = validator.check(attribute_request, brp_data)
+
+    active_session = session_manager.append_session_data(session_id, {'request_valid': validator_response})
 
     # can not be ended here, since requestor needs to access data still
     # session_manager.end_session(session_id)
