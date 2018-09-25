@@ -106,3 +106,6 @@ venv.bak/
 # Created by https://www.gitignore.io/api/pycharm
 
 server/.idea/
+
+connect.vps.sh
+deploy.vps.sh
