@@ -16,7 +16,3 @@ def get_data(username):
     for data in brp_data:
         if data['account']['username'] == username:
             return data['data']
-
-
-def get_date_of_birth(data):
-    return data['dateOfBirth']

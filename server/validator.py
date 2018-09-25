@@ -1,6 +1,5 @@
 import time
 import datetime
-import data_source
 
 # utils to check for age and stuff
 
@@ -8,6 +7,16 @@ import data_source
 def age_check(age, date_of_birth):
     current_time_utc = time.time()
     print(current_time_utc)
+
+    user_time = time.mktime(datetime.datetime.strptime(date_of_birth, "%d-%m-%Y").timetuple())
+    print(user_time)
+
+    print(current_time_utc - user_time)
+
+    min = datetime.datetime.fromtimestamp(user_time)
+    max = datetime.datetime.fromtimestamp(current_time_utc)
+
+    print("Total days : " + str((max - min).days))
 
     # input_time = datetime.strptime(date_of_birth, '%d-%m-%Y')
     # print(input_time)
@@ -24,9 +33,7 @@ def check(request, user_data):
         if user_data['dateOfBirth'] == "24-12-2001":
             return False
 
-        # return age_check(18, data_source.get_date_of_birth(user_data))
-
     return "Request not found"
 
 
-# age_check(18, '03-08-1999')
+age_check(18, '03-08-1999')
