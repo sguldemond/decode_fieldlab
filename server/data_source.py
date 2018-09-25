@@ -1,6 +1,5 @@
 brp_data = []
 
-
 def generate_dummy_data():
     data_person1 = {'BSN': '830563313', 'surname': 'Jansen', 'initials': 'AJ', 'dateOfBirth': '02-08-1999'}
     data_person2 = {'BSN': '277345108', 'surname': 'Pietersen', 'initials': 'PWA', 'dateOfBirth': '24-12-2001'}

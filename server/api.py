@@ -7,8 +7,8 @@ import validator
 app = Flask(__name__, static_url_path='/../../dist')
 CORS(app)
 
-# data_source.generate_dummy_data()
-#
+data_source.generate_dummy_data()
+
 # @app.route('/decode/<path:path>')
 # def send_web(path):
 #     return send_from_directory('', path)
@@ -59,7 +59,7 @@ def accept_request():
     brp_data = data_source.get_data(username)
 
     attribute_request = session_manager.get_session(session_id)['request']
-    validator_response = validator.check(attribute_request, brp_data['data'])
+    validator_response = validator.check(attribute_request, brp_data)
 
     active_session = session_manager.append_session_data(session_id, {'request_valid': validator_response})
 
