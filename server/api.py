@@ -1,12 +1,16 @@
-from flask import Flask, request, Response, json, jsonify
+from flask import Flask, request, Response, json, session, send_from_directory
 from flask_cors import CORS
 import session_manager
 import data_source
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/../../dist')
 CORS(app)
 
-data_source.generate_dummy_data()
+# data_source.generate_dummy_data()
+#
+# @app.route('/decode/<path:path>')
+# def send_web(path):
+#     return send_from_directory('', path)
 
 
 @app.route('/')
@@ -55,6 +59,7 @@ def accept_request():
     brp_data = data_source.get_data(username)
     active_session = session_manager.append_session_data(session_id, brp_data)
 
+    # can not be ended here, since requestor needs to access data still
     # session_manager.end_session(session_id)
 
     return json_response(active_session)
@@ -66,13 +71,24 @@ def deny_request():
     data_json = json.loads(data)
     session_id = data_json['session_id']
 
-    session_manager.end_session(session_id)
-    return json_response({'response': "Session ended"})
+    response = session_manager.end_session(session_id)
+
+    return json_response({'response': response})
 
 
 @app.route('/get_active_sessions', methods=['GET'])
 def get_active_sessions():
     return json_response(session_manager.active_sessions)
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    session['logged_in'] = True
+
+
+# @app.route('/logout')
+# def login():
+#     session['logged_in'] = False
 
 
 def json_response(data):

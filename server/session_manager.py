@@ -50,7 +50,12 @@ def end_session(session_id):
             session_to_end = session
             break
 
+    if session_to_end is None:
+        return "Session not found"
+
     active_sessions.remove(session_to_end)
-    print("Session ended with ID: " + session_to_end)
+    print("Session ended with ID: " + session_to_end['id'])
+
+    return "Session ended"
 
 
