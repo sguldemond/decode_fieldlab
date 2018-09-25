@@ -1,11 +1,16 @@
-# decode_fieldlab
+# DECODE Fieldlab
 Proof of concept for decode made during Fieldlab hackathon
 
 # Installation
 
-python3 -m venv venv
-source venv/bin/activate
-pip install -r server/requirements.txt
+`python3 -m venv venv`
 
-cd server
-python api.py
+`source venv/bin/activate`
+
+`pip install -r server/requirements.txt`
+
+# Run
+
+`cd server`
+
+`python api.py`
