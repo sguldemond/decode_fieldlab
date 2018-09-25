@@ -77,7 +77,8 @@ def deny_request():
 
     active_session = session_manager.append_session_data(session_id, {'request_status': 'DENIED'})
 
-    session_manager.end_session(session_id)
+    # can not be ended here, since requestor needs to access data still
+    # session_manager.end_session(session_id)
 
     return json_response({'response': active_session})
 
