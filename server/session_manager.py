@@ -35,13 +35,15 @@ def get_session_status(session_id):
     return "Session not found"
 
 
-def append_session_data(session_id, data):
+def append_session_data(session_id, data, status):
     for session in active_sessions:
         if session['id'] == session_id:
             session['data'] = data
-            session['status'] = 'FINALIZED'
+            session['status'] = status
 
             return session
+    # TODO: return error if session doesn't excist
+    # could be helper method used in across session manager
 
 
 def end_session(session_id):

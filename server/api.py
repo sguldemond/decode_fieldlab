@@ -15,6 +15,41 @@ data_source.generate_dummy_data()
 def hello():
     return "Hello Fieldlab!"
 
+### start ONBOARDING ###
+@app.route('/init_onboarding', methods=['POST'])
+def init_onboarding_request():
+    #TODO: check who is requesting onboarding session, ip check/zenroom?
+    print "Not yet checked who is requesting onboarding session!"
+
+    request = "onboarding"
+    description = "I want to start onboarding session"
+    
+    session_id = session_manager.init_session(request, description)
+    return json_response({'session_id': session_id})
+
+@app.route("/attach_public_key", methods=['POST'])
+def attach_public_key():
+    data = request.get_data()
+    data_json = json.loads(data)
+    public_key = data_json['public_key']
+    session_id = data_json['session_id']
+
+    data = {"public_key": public_key}
+
+    session = session_manager.append_session_data(session_id, data, 'CONTINUED_1')
+    return json_response({"response": session})
+
+def attach_encrypted_data():
+    data = request.get_data()
+    data_json = json.loads(data)
+    encrypted_data = data_json['encrypted_data']
+    session_id = data_json['session_id']
+
+    data = {"encrypted": encrypted_data}
+    session = session_manager.append_session_data(session_manager, data, "FINALIZED")
+    return json_response({"response": session})
+
+### end ONBOARDING ###
 
 @app.route('/init_disclosure', methods=['POST'])
 def init_disclosure_request():
@@ -43,6 +78,7 @@ def get_session_status():
     data_json = json.loads(data)
     session_id = data_json['session_id']
 
+    # TODO: rename 'response' > 'status'
     response = session_manager.get_session_status(session_id)
     return json_response({'response': response})
 
@@ -61,7 +97,7 @@ def accept_request():
     random_color = "rgb({0},{1},{2})".format(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
     data = {'request_valid': validator_response, 'request_status': 'ACCEPTED', 'secret': random_color}
-    active_session = session_manager.append_session_data(session_id, data)
+    active_session = session_manager.append_session_data(session_id, data, 'FINALIZED')
 
     # can not be ended here, since requestor needs to access data still
     # session_manager.end_session(session_id)
@@ -75,7 +111,7 @@ def deny_request():
     data_json = json.loads(data)
     session_id = data_json['session_id']
 
-    active_session = session_manager.append_session_data(session_id, {'request_status': 'DENIED'})
+    active_session = session_manager.append_session_data(session_id, {'request_status': 'DENIED'}, 'FINALIZED')
 
     # can not be ended here, since requestor needs to access data still
     # session_manager.end_session(session_id)
