@@ -39,6 +39,7 @@ def attach_public_key():
     session = session_manager.append_session_data(session_id, data, 'CONTINUED_1')
     return json_response({"response": session})
 
+@app.route("/attach_encrypted_data", methods=['POST'])
 def attach_encrypted_data():
     data = request.get_data()
     data_json = json.loads(data)
@@ -46,7 +47,8 @@ def attach_encrypted_data():
     session_id = data_json['session_id']
 
     data = {"encrypted": encrypted_data}
-    session = session_manager.append_session_data(session_manager, data, "FINALIZED")
+    session = session_manager.append_session_data(session_id, data, "FINALIZED")
+    print(session)
     return json_response({"response": session})
 
 ### end ONBOARDING ###

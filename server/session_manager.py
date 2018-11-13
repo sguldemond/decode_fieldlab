@@ -2,7 +2,6 @@ from uuid import uuid4
 
 active_sessions = []
 
-
 def init_session(attribute_request, description):
     new_session_id = str(uuid4())
     new_session = {'request': attribute_request,
@@ -43,7 +42,7 @@ def append_session_data(session_id, data, status):
 
             return session
     # TODO: return error if session doesn't excist
-    # could be helper method used in across session manager
+    # could be helper method used across session manager
 
 
 def end_session(session_id):
