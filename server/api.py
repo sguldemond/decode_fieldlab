@@ -48,7 +48,6 @@ def attach_encrypted_data():
 
     data = {"encrypted": encrypted_data}
     session = session_manager.append_session_data(session_id, data, "FINALIZED")
-    print(session)
     return json_response({"response": session})
 
 ### end ONBOARDING ###
